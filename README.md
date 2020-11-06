@@ -9,7 +9,7 @@ virtualenv -p python3 dev_environment
 source dev_environment/bin/activate
 
 cd bizhackaton-devflow-test
-pip3 install requirements.txt
+pip install -r requirements.txt
 export FLASK_APP=hello.py
 flask run
 
