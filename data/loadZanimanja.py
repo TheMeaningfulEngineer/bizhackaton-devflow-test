@@ -29,8 +29,21 @@ def search_df_by_djelatnost_string(nkd_list, search_string):
     match_series = nkd_list.Naziv.str.contains(regex, case=False)
     return nkd_list[match_series]
 
+
+def df_to_json(nkd_list, search_string):
+    resultDf = search_df_by_djelatnost_string(nkd_list, search_string)
+    resultJson = resultDf.to_json(orient="records")
+    return resultJson
+
+
+# TODO: zavrsiti
+def fetch_nkd()
+    pass
+    # Vraca nkd dataframe i parsira ga svaki pu. Boze moj :)
+
+
+
 # Primjer
-import json
 resultDf = search_df_by_djelatnost_string(mali_nkd, "prij")
 resultJson = resultDf.to_json(orient="records")
 parsed = json.loads(resultJson)
