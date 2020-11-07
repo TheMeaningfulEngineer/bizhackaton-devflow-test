@@ -6,6 +6,7 @@ import time
 
 app = Flask(__name__)
 CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/')
 def hello_world():
@@ -17,16 +18,25 @@ def get_current_time():
 
 # TODO: search_string mora doci kao poziv sa frontenda
 # Treba modificirati endpoint tako da ima taj search string u svom scope-u
-@app.route('/activities')
+@app.route('/activities', methods = ['GET'])
 def get_activities():
-    return {   
-    1: {
-        "sifra": "10.11",
-        "ime": "Prerada i konzerviranje mesa",
-        "vezanost": "vezana"
-    },
-    2: {
-        "sifra": "10.51.01",
-        "ime": "Prerada mlijeka i proizvodnja sira",
-        "vezanost": "vezana"
-    }}
+    data = request.get_json()
+    print(data)
+    return data
+    # return {   
+    # 1: {
+    #     "sifra": "10.11",
+    #     "ime": "Prerada i konzerviranje mesa",
+    #     "vezanost": "vezana"
+    # },
+    # 2: {
+    #     "sifra": "10.51.01",
+    #     "ime": "Prerada mlijeka i proizvodnja sira",
+    #     "vezanost": "vezana"
+    # }}
+
+# @app.route('/api/query', methods = ['POST'])
+# def get_query_from_react():
+#     data = request.form
+#     print(data)
+#     return data

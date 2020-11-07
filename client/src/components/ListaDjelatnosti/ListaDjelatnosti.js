@@ -4,6 +4,9 @@ import styles from "./listadjelatnosti.module.css";
 
 export default function ListaDjelatnosti({ result }) {
     console.log("result u listadjelatnosti: ", result);
+    const handleClick = () => {
+        console.log("i was clicked");
+    };
     return (
         <div className={styles.container}>
             {result.map((item) => {
@@ -28,6 +31,7 @@ export default function ListaDjelatnosti({ result }) {
                         key={item.sifra}
                         className={styles.lista}
                         style={style2}
+                        onClick={handleClick}
                     >
                         <div className={styles.sifra}>{item.sifra}</div>
                         <div className={styles.ime}>{item.ime}</div>

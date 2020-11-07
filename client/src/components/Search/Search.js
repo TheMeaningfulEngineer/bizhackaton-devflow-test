@@ -13,8 +13,12 @@ export default function Search() {
         console.log(input);
         //console.log(data);
         //let cleanup = false;
+        let query = {
+            keyword: input,
+        };
+        let data = JSON.stringify(query);
         axios
-            .get("/activities", { query: { keyword: input } })
+            .post("/activities", data)
             .then(({ data }) => {
                 console.log(data);
                 const dataArray = Object.entries(data).map((e) => e[1]);
