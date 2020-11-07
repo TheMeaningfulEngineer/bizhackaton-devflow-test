@@ -16,9 +16,9 @@ export default function Search() {
         let query = {
             keyword: input,
         };
-        let data = JSON.stringify(query);
+        //let data = JSON.stringify(query);
         axios
-            .post("/activities", data)
+            .get("/activities", query)
             .then(({ data }) => {
                 console.log(data);
                 const dataArray = Object.entries(data).map((e) => e[1]);
