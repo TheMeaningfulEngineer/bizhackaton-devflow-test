@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
-app = Flask(__name__)
 import time
+from data import loadZanimanja
+
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
@@ -14,8 +16,11 @@ def get_current_time():
 
 @app.route('/activities')
 def get_activities():
-    return {
-        "sifra": "10.11",
-        "ime": "Prerada i konzerviranje mesa",
-        "vezanost": "vezana"
-    }
+    #return {
+    #    "sifra": "10.11",
+    #    "ime": "Prerada i konzerviranje mesa",
+    #    "vezanost": "vezana"
+    #}
+    
+    #Primjer
+    return loadZanimanja.resultJson
