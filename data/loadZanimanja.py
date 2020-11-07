@@ -19,5 +19,14 @@ del nkd2007Df["Po-druč-je"]
 del nkd2007Df["Odje-ljak"]
 del nkd2007Df["Sku-pina"]
 
+# Za dev potrebe samo da prikazuje dio
+mali_nkd = nkd2007Df.iloc[400:420]
+
+
 def search_df_by_djelatnost_string(nkd_list, search_string):
-    pass
+    regex = f".*{search_string}.*"
+    match_series = nkd_list.Naziv.str.contains(regex, case=False)
+    return nkd_list[match_series]
+
+# Primjer
+print(search_df_by_djelatnost_string(mali_nkd, "prij"))
