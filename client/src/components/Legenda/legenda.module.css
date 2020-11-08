@@ -1,11 +1,11 @@
 .container {
-    width: 30%;
-    height: 30%;
+    width: 25%;
+    height: 75%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    margin-left: 10%;
-    margin-top: 3%;
+    justify-content: flex-start;
+    margin-left: 3%;
+    margin-top: 7%;
 }
 
 .vezana,
@@ -13,6 +13,7 @@
 .povlastena {
     display: flex;
     flex-direction: row;
+    margin-bottom: 5%;
 }
 
 .violet,

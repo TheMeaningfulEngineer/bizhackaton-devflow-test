@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./listadjelatnosti.module.css";
 //import data from "../../data.json";
 
 export default function ListaDjelatnosti({ result, addOpis, colorFilter }) {
     const handleClick = (e) => {
-        addOpis("klik");
+        //console.log(e.target.innerText);
+        if (e.target.innerText === "Izdavanje knjiga") {
+            addOpis("izdavanje");
+        } else if (e.target.innerText === "Uvezivanje knjiga") {
+            addOpis("uvezivanje");
+        } else {
+            addOpis(false);
+        }
     };
 
     return (

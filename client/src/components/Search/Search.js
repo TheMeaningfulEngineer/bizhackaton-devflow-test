@@ -9,8 +9,9 @@ import Opis from "../Opis/Opis";
 export default function Search() {
     const [input, setInput] = useState();
     const [result, setResult] = useState([]);
-    const [opis, setDescript] = useState(false);
+    //const [opis, setOpis] = useState(false);
     const [colorFilter, setColorFilter] = useState("");
+    const [info, setInfo] = useState();
 
     useEffect(() => {
         let query = {
@@ -21,7 +22,8 @@ export default function Search() {
             .get("/activities", query)
             .then(({ data }) => {
                 //console.log(data);
-                const dataArray = Object.entries(data).map((e) => e[1]);
+                const dataArray = data.djelatnosti;
+                //Object.entries(data).map((e) => e[1]);
                 const list = [];
                 for (let i = 0; i < dataArray.length; i++) {
                     if (dataArray[i].ime.toLowerCase().includes(input)) {
@@ -34,16 +36,12 @@ export default function Search() {
                 console.log(err);
             });
     }, [input]);
+
     useEffect(() => {
         axios
             .get("/activities")
             .then(({ data }) => {
-                const dataArray = Object.entries(data).map((e) => e[1]);
-                const list = [];
-                for (let i = 0; i < dataArray.length; i++) {
-                    list.push(dataArray[i]);
-                }
-                setResult(list);
+                setResult(data.djelatnosti);
             })
             .catch((err) => {
                 console.log(err);
@@ -55,7 +53,21 @@ export default function Search() {
     };
 
     const addOpis = (klik) => {
-        setDescript(klik);
+        console.log("klik: ", klik);
+        console.log(result);
+        if (klik === "izdavanje") {
+            //setOpis(true);
+            setInfo(result[3]);
+            console.log("4", info);
+        } else if (klik === "uvezivanje") {
+            //setOpis(true);
+            setInfo(result[2]);
+            console.log("3", info);
+        } else {
+            //setOpis(false);
+            setInfo(false);
+        }
+        //console.log(opis);
     };
 
     const addColorFilter = (filter) => {
@@ -92,7 +104,9 @@ export default function Search() {
                     colorFilter={colorFilter}
                 />
             </div>
-            {opis ? <Opis /> : null}
+            {info ? (
+                <Opis addOpis={(klik) => addOpis(klik)} info={info} />
+            ) : null}
         </div>
     );
 }
