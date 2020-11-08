@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./listadjelatnosti.module.css";
 //import data from "../../data.json";
 
-export default function ListaDjelatnosti({ result, addOpis }) {
-    console.log("result u listadjelatnosti: ", result);
+export default function ListaDjelatnosti({ result, addOpis, colorFilter }) {
     const handleClick = (e) => {
         addOpis("klik");
     };
+
     return (
         <div className={styles.container}>
             {result.map((item) => {
                 let style = {};
                 let style2 = {};
-                console.log(item.ime);
                 if (item.vezanost === "slobodna") {
                     style2 = { borderColor: "#4A8FE7" };
                     style = {
@@ -24,6 +23,8 @@ export default function ListaDjelatnosti({ result, addOpis }) {
                 } else {
                     style = { backgroundColor: "#F45B69" };
                     style2 = { borderColor: "#F45B69" };
+                }
+                if (colorFilter === "violet") {
                 }
                 return (
                     <div

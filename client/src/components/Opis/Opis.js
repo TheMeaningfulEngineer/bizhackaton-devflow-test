@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./opis.module.css";
+import Frame from "framer";
 
 export default function Opis() {
     return (

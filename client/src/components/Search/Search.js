@@ -9,38 +9,22 @@ import Opis from "../Opis/Opis";
 export default function Search() {
     const [input, setInput] = useState();
     const [result, setResult] = useState([]);
-    const [debouncedInput, setDebouncedInput] = useState();
     const [opis, setDescript] = useState(false);
-    //console.log("result: ", result);
-
-    //a u onaj drugi useefekt dodati da prati debounced input
-    useEffect(() => {
-        const timerId = setTimeout(() => {
-            setDebouncedInput(input);
-        }, 1000);
-
-        return () => {
-            clearTimeout(timerId);
-        };
-    }, [input]);
+    const [colorFilter, setColorFilter] = useState("");
 
     useEffect(() => {
-        //console.log(input);
-        //console.log(data);
-        //let cleanup = false;
         let query = {
-            keyword: debouncedInput,
+            keyword: input,
         };
+
         axios
-            .post("/activities", query)
+            .get("/activities", query)
             .then(({ data }) => {
-                console.log(data);
+                //console.log(data);
                 const dataArray = Object.entries(data).map((e) => e[1]);
                 const list = [];
                 for (let i = 0; i < dataArray.length; i++) {
-                    if (
-                        dataArray[i].ime.toLowerCase().includes(debouncedInput)
-                    ) {
+                    if (dataArray[i].ime.toLowerCase().includes(input)) {
                         list.push(dataArray[i]);
                     }
                 }
@@ -49,7 +33,22 @@ export default function Search() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [debouncedInput]);
+    }, [input]);
+    useEffect(() => {
+        axios
+            .get("/activities")
+            .then(({ data }) => {
+                const dataArray = Object.entries(data).map((e) => e[1]);
+                const list = [];
+                for (let i = 0; i < dataArray.length; i++) {
+                    list.push(dataArray[i]);
+                }
+                setResult(list);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -57,12 +56,29 @@ export default function Search() {
 
     const addOpis = (klik) => {
         setDescript(klik);
-        console.log("lalal");
     };
 
+    const addColorFilter = (filter) => {
+        setColorFilter(filter);
+        let filteredList = result;
+        if (colorFilter === "violet") {
+            filteredList = result.filter((item) => {
+                return item.vezanost === "vezana";
+            });
+        } else if (colorFilter === "red") {
+            filteredList = result.filter((item) => {
+                return item.vezanost === "povlaštena";
+            });
+        } else if (colorFilter === "blue") {
+            filteredList = result.filter((item) => {
+                return item.vezanost === "slobodna";
+            });
+        }
+        return filteredList;
+    };
     return (
         <div className={styles.search_container}>
-            <Legenda />
+            <Legenda addColorFilter={(filter) => addColorFilter(filter)} />
             <div className={styles.search}>
                 <input
                     type="text"
@@ -73,6 +89,7 @@ export default function Search() {
                 <ListaDjelatnosti
                     result={result}
                     addOpis={(klik) => addOpis(klik)}
+                    colorFilter={colorFilter}
                 />
             </div>
             {opis ? <Opis /> : null}
