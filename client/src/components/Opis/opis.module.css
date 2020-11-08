@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #43aa8b;
+    width: 40%;
+    height: 50%;
+}
+
+.iks {
+    align-self: flex-end;
+}
+
+.border {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #43aa8b;
+    height: 90%;
+    width: 90%;
+}
+
+.kvalifikacije,
+.opis {
+    margin: 5%;
+    border: 2px solid #43aa8b;
+    width: 90%;
+}
+
+.opis {
+    height: 60%;
+}

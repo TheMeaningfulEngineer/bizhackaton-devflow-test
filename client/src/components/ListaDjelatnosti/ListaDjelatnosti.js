@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./listadjelatnosti.module.css";
 //import data from "../../data.json";
 
-export default function ListaDjelatnosti({ result }) {
+export default function ListaDjelatnosti({ result, addOpis }) {
     console.log("result u listadjelatnosti: ", result);
-    const handleClick = () => {
-        console.log("i was clicked");
+    const handleClick = (e) => {
+        addOpis("klik");
     };
     return (
         <div className={styles.container}>
@@ -25,13 +25,12 @@ export default function ListaDjelatnosti({ result }) {
                     style = { backgroundColor: "#F45B69" };
                     style2 = { borderColor: "#F45B69" };
                 }
-                console.log(style);
                 return (
                     <div
                         key={item.sifra}
                         className={styles.lista}
                         style={style2}
-                        onClick={handleClick}
+                        onClick={(e) => handleClick(e)}
                     >
                         <div className={styles.sifra}>{item.sifra}</div>
                         <div className={styles.ime}>{item.ime}</div>

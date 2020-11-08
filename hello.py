@@ -18,9 +18,10 @@ def get_current_time():
 
 # TODO: search_string mora doci kao poziv sa frontenda
 # Treba modificirati endpoint tako da ima taj search string u svom scope-u
-@app.route('/activities', methods = ['GET'])
+@app.route('/activities', methods = ['POST'])
 def get_activities():
-    data = request.get_json()
+    data = request.get_json(force=True)
+    print(request)
     print(data)
     return data
     # return {   
@@ -35,8 +36,3 @@ def get_activities():
     #     "vezanost": "vezana"
     # }}
 
-# @app.route('/api/query', methods = ['POST'])
-# def get_query_from_react():
-#     data = request.form
-#     print(data)
-#     return data
