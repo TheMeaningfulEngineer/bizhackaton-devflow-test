@@ -8,6 +8,7 @@
     border-radius: 10px;
     margin-bottom: 3%;
     height: 70%;
+    overflow-y: scroll;
 }
 
 .lista {
@@ -17,7 +18,7 @@
     /* justify-content: space-between; */
     align-items: center;
     text-align: center;
-    height: 60px;
+    height: 70px;
     border: 1px solid #43aa8b;
     width: 98%;
     border-radius: 10px;
@@ -27,7 +28,7 @@
 .sifra {
     display: flex;
     width: 10%;
-    margin-right: 2%;
+    margin-right: 5%;
 }
 
 .ime {
@@ -43,6 +44,7 @@
     border-radius: 10px;
     color: white;
     /* background-color: #43aa8b; */
-    width: 20%;
+    width: 100px;
     margin-left: 2%;
+    height: 25px;
 }

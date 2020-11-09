@@ -1,19 +1,21 @@
 import React from "react";
 import styles from "./listadjelatnosti.module.css";
-//import data from "../../data.json";
 
-export default function ListaDjelatnosti({ result, addOpis, colorFilter }) {
-    const handleClick = (e) => {
-        //console.log(e.target.innerText);
-        if (e.target.innerText === "Izdavanje knjiga") {
-            addOpis("izdavanje");
-        } else if (e.target.innerText === "Uvezivanje knjiga") {
-            addOpis("uvezivanje");
-        } else {
-            addOpis(false);
-        }
+export default function ListaDjelatnosti({
+    list,
+    addOpis,
+    filteredList,
+    colorFilter,
+}) {
+    const handleClick = (e, sifra) => {
+        addOpis(sifra);
     };
-
+    let result;
+    if (colorFilter) {
+        result = filteredList;
+    } else {
+        result = list;
+    }
     return (
         <div className={styles.container}>
             {result.map((item) => {
@@ -31,14 +33,13 @@ export default function ListaDjelatnosti({ result, addOpis, colorFilter }) {
                     style = { backgroundColor: "#F45B69" };
                     style2 = { borderColor: "#F45B69" };
                 }
-                if (colorFilter === "violet") {
-                }
+
                 return (
                     <div
                         key={item.sifra}
                         className={styles.lista}
                         style={style2}
-                        onClick={(e) => handleClick(e)}
+                        onClick={(e) => handleClick(e, item.sifra)}
                     >
                         <div className={styles.sifra}>{item.sifra}</div>
                         <div className={styles.ime}>{item.ime}</div>

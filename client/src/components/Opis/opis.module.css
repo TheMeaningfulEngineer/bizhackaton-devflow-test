@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     border: 2px solid #43aa8b;
+    border-radius: 10px;
     width: 40%;
     height: 50%;
     right: -10px;
@@ -10,6 +11,9 @@
 
 .iks {
     align-self: flex-end;
+    width: 2%;
+    margin: 0;
+    margin-right: 2%;
 }
 
 .border {
@@ -21,15 +25,29 @@
     border: 1px solid #43aa8b;
     height: 90%;
     width: 90%;
+    align-self: center;
+}
+
+.title {
+    font-weight: bold;
 }
 
 .kvalifikacije,
 .opis {
     margin: 5%;
-    border: 2px solid #43aa8b;
+    border: 1px solid #43aa8b;
     width: 90%;
+    border-radius: 10px;
+    padding: 2%;
 }
 
 .opis {
     height: 60%;
+    overflow-y: scroll;
+}
+
+a {
+    text-decoration: none;
+    color: #f45b69;
+    margin-bottom: 2%;
 }

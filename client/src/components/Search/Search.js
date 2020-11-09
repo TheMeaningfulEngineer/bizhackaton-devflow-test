@@ -9,85 +9,104 @@ import Opis from "../Opis/Opis";
 export default function Search() {
     const [input, setInput] = useState();
     const [result, setResult] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
     //const [opis, setOpis] = useState(false);
     const [colorFilter, setColorFilter] = useState("");
     const [info, setInfo] = useState();
 
+    // useEffect(() => {
+    //     axios
+    //         .get("/activities")
+    //         .then(({ data }) => {
+    //             setResult(data.djelatnosti);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
+
     useEffect(() => {
+        console.log("tu sam");
         let query = {
             keyword: input,
         };
-
-        axios
-            .get("/activities", query)
-            .then(({ data }) => {
-                //console.log(data);
-                const dataArray = data.djelatnosti;
-                //Object.entries(data).map((e) => e[1]);
-                const list = [];
-                for (let i = 0; i < dataArray.length; i++) {
-                    if (dataArray[i].ime.toLowerCase().includes(input)) {
-                        list.push(dataArray[i]);
+        if (query.keyword) {
+            axios
+                .get("/activities", query)
+                .then(({ data }) => {
+                    const dataArray = data.djelatnosti;
+                    const list = [];
+                    for (let i = 0; i < dataArray.length; i++) {
+                        if (dataArray[i].ime.toLowerCase().includes(input)) {
+                            list.push(dataArray[i]);
+                        }
                     }
-                }
-                setResult(list);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                    setResult(list);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            axios
+                .get("/activities")
+                .then(({ data }) => {
+                    setResult(data.djelatnosti);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     }, [input]);
-
-    useEffect(() => {
-        axios
-            .get("/activities")
-            .then(({ data }) => {
-                setResult(data.djelatnosti);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
 
     const handleChange = (e) => {
         setInput(e.target.value);
     };
 
-    const addOpis = (klik) => {
-        console.log("klik: ", klik);
-        console.log(result);
-        if (klik === "izdavanje") {
-            //setOpis(true);
-            setInfo(result[3]);
-            console.log("4", info);
-        } else if (klik === "uvezivanje") {
-            //setOpis(true);
-            setInfo(result[2]);
-            console.log("3", info);
-        } else {
-            //setOpis(false);
-            setInfo(false);
-        }
-        //console.log(opis);
+    const addOpis = (sifra) => {
+        result.map((item) => {
+            if (item.sifra === sifra) {
+                const info = item;
+                setInfo(info);
+            }
+            return item;
+        });
     };
 
     const addColorFilter = (filter) => {
-        setColorFilter(filter);
-        let filteredList = result;
-        if (colorFilter === "violet") {
-            filteredList = result.filter((item) => {
-                return item.vezanost === "vezana";
+        let filteredList = [];
+        let list;
+        if (colorFilter) {
+            list = filteredList;
+        } else {
+            list = result;
+        }
+        if (filter === "violet") {
+            list.filter((item) => {
+                if (item.vezanost === "vezana") {
+                    return filteredList.push(item);
+                }
+                return filteredList;
             });
-        } else if (colorFilter === "red") {
-            filteredList = result.filter((item) => {
-                return item.vezanost === "povlaštena";
+        } else if (filter === "red") {
+            list.filter((item) => {
+                if (item.vezanost === "povlaštena") {
+                    return filteredList.push(item);
+                }
+                return filteredList;
             });
-        } else if (colorFilter === "blue") {
-            filteredList = result.filter((item) => {
-                return item.vezanost === "slobodna";
+        } else if (filter === "blue") {
+            list.filter((item) => {
+                if (item.vezanost === "slobodna") {
+                    return filteredList.push(item);
+                }
+                return filteredList;
             });
         }
+        setColorFilter(filter);
+        setFilteredList(filteredList);
         return filteredList;
     };
+
     return (
         <div className={styles.search_container}>
             <Legenda addColorFilter={(filter) => addColorFilter(filter)} />
@@ -96,17 +115,16 @@ export default function Search() {
                     type="text"
                     placeholder="Upišite pojam za pretraživanje"
                     className={styles.term}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                 />
                 <ListaDjelatnosti
-                    result={result}
-                    addOpis={(klik) => addOpis(klik)}
+                    list={result}
+                    addOpis={(sifra) => addOpis(sifra)}
+                    filteredList={filteredList}
                     colorFilter={colorFilter}
                 />
             </div>
-            {info ? (
-                <Opis addOpis={(klik) => addOpis(klik)} info={info} />
-            ) : null}
+            {info ? <Opis info={info} setInfo={setInfo} /> : null}
         </div>
     );
 }
