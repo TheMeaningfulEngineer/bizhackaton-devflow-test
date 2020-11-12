@@ -17,7 +17,7 @@ export default function ListaDjelatnosti({
         result = list;
     }
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${styles.scrollbar}`}>
             {result.map((item) => {
                 let style = {};
                 let style2 = {};
@@ -41,11 +41,13 @@ export default function ListaDjelatnosti({
                         style={style2}
                         onClick={(e) => handleClick(e, item.sifra)}
                     >
-                        <div className={styles.sifra}>{item.sifra}</div>
-                        <div className={styles.ime}>{item.ime}</div>
-                        <div className={styles.vezanost} style={style}>
-                            {item.vezanost}
+                        <div className={styles.sifra} style={style}>
+                            {item.sifra}
                         </div>
+                        <div className={styles.ime}>{item.ime}</div>
+                        {/* <div className={styles.vezanost} style={style}>
+                            {item.vezanost}
+                        </div> */}
                     </div>
                 );
             })}

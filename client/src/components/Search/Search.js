@@ -10,53 +10,42 @@ export default function Search() {
     const [input, setInput] = useState();
     const [result, setResult] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
-    //const [opis, setOpis] = useState(false);
     const [colorFilter, setColorFilter] = useState("");
     const [info, setInfo] = useState();
 
-    // useEffect(() => {
-    //     axios
-    //         .get("/activities")
-    //         .then(({ data }) => {
-    //             setResult(data.djelatnosti);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios
+            .get("/activities")
+            .then(({ data }) => {
+                setResult(data.djelatnosti);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [input]);
 
     useEffect(() => {
-        console.log("tu sam");
-        let query = {
-            keyword: input,
-        };
-        if (query.keyword) {
-            axios
-                .get("/activities", query)
-                .then(({ data }) => {
-                    const dataArray = data.djelatnosti;
-                    const list = [];
-                    for (let i = 0; i < dataArray.length; i++) {
-                        if (dataArray[i].ime.toLowerCase().includes(input)) {
-                            list.push(dataArray[i]);
-                        }
-                    }
-                    setResult(list);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        console.log("input", input);
+        console.log("result", result);
+        console.log("colorfilter", colorFilter);
+        console.log("filteredList", filteredList);
+
+        let dataArray;
+        if (colorFilter) {
+            dataArray = filteredList;
         } else {
-            axios
-                .get("/activities")
-                .then(({ data }) => {
-                    setResult(data.djelatnosti);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            dataArray = result;
         }
-    }, [input]);
+        const list = [];
+        if (input) {
+            for (let i = 0; i < dataArray.length; i++) {
+                if (dataArray[i].ime.toLowerCase().includes(input)) {
+                    list.push(dataArray[i]);
+                }
+            }
+            setResult(list);
+        }
+    }, [input, result, colorFilter, filteredList]);
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -74,12 +63,7 @@ export default function Search() {
 
     const addColorFilter = (filter) => {
         let filteredList = [];
-        let list;
-        if (colorFilter) {
-            list = filteredList;
-        } else {
-            list = result;
-        }
+        let list = result;
         if (filter === "violet") {
             list.filter((item) => {
                 if (item.vezanost === "vezana") {

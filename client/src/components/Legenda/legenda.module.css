@@ -10,7 +10,8 @@
 
 .vezana,
 .slobodna,
-.povlastena {
+.povlastena,
+.sve {
     display: flex;
     flex-direction: row;
     margin-bottom: 5%;
@@ -18,7 +19,8 @@
 
 .violet,
 .blue,
-.red {
+.red,
+.clear {
     height: 20px;
     width: 20px;
     border-radius: 5px;
@@ -35,4 +37,9 @@
 
 .red {
     background-color: #f45b69;
+}
+
+.clear {
+    background-color: white;
+    border: 1px solid #43aa8b;
 }
