@@ -1,7 +1,8 @@
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 import time
-from data import loadZanimanja
+# from data import loadZanimanja
 
 app = Flask(__name__)
 CORS(app)
@@ -18,18 +19,14 @@ def get_current_time():
 # Treba modificirati endpoint tako da ima taj search string u svom scope-u
 @app.route('/activities')
 def get_activities():
-
-    # search_string_koji_je_dosao_iz_fronetenda variajbla
-
-    # Nekako osigurati NKD bazu u kontekstu ove metode
-
-    nkd_baza = loadZanimanja.fetch_nkd()
-    loadZanimanja.df_to_json(nkd_baza ,search_string_koji_je_dosao_iz_fronetenda)
-    #return {
-    #    "sifra": "10.11",
-    #    "ime": "Prerada i konzerviranje mesa",
-    #    "vezanost": "vezana"
-    #}
-    
-    #Primjer
-    return loadZanimanja.resultJson
+    return {   
+    1: {
+        "sifra": "10.11",
+        "ime": "Prerada i konzerviranje mesa",
+        "vezanost": "vezana"
+    },
+    2: {
+        "sifra": "10.51.01",
+        "ime": "Prerada mlijeka i proizvodnja sira",
+        "vezanost": "vezana"
+    }}
